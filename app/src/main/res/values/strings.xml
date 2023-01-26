@@ -2,4 +2,10 @@
     <string name="app_name">Critical TechWorks TaskApp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_text">Displaying a top news headlines from Api here https://newsapi.org/v2/top-headlines for my android role assesment at Critical TechWorks, Hope to land this role and join the Amazing Rock Stars over there!</string>
+    <string name="title">headline_title</string>
+    <string name="tags">title</string>
+    <string name="fuel_level">description</string>
+    <string name="image">headline Image</string>
+    <string name="error">Error fetching News Headlines</string>
 </resources>

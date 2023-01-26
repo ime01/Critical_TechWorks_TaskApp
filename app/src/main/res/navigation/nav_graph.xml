@@ -7,20 +7,32 @@
 
     <fragment
         android:id="@+id/topHeadLinesFragment"
-        android:name="com.example.criticaltechworkstaskapp.ui.TopHeadLinesFragment"
+        android:name="com.example.criticaltechworkstaskapp.ui.fragments.TopHeadLinesFragment"
         android:label="News Headlines"
         tools:layout="@layout/fragment_top_head_lines" >
         <action
             android:id="@+id/action_topHeadLinesFragment_to_headLineDetailsFragment"
-            app:destination="@id/headLineDetailsFragment" />
+            app:destination="@id/headLineDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+        <argument
+            android:name="news"
+            app:argType="com.example.criticaltechworkstaskapp.domian.model.News"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/headLineDetailsFragment"
-        android:name="com.example.criticaltechworkstaskapp.ui.HeadLineDetailsFragment"
+        android:name="com.example.criticaltechworkstaskapp.ui.fragments.HeadLineDetailsFragment"
         android:label="News Details"
         tools:layout="@layout/fragment_head_line_details" >
-        <action
-            android:id="@+id/action_headLineDetailsFragment_to_topHeadLinesFragment"
-            app:destination="@id/topHeadLinesFragment" />
+        <argument
+            android:name="news"
+            app:argType="com.example.criticaltechworkstaskapp.domian.model.News"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>
