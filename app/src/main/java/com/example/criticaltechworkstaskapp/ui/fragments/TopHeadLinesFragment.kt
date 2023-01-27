@@ -98,7 +98,11 @@ class TopHeadLinesFragment : Fragment() {
 
                         Status.SUCCESS -> {
 
-                            loadRecyclerView(it.data!!)
+                            val headLinesSortedByDated = it.data?.sortedBy { it.publishedAt }
+
+                            headLinesSortedByDated?.let { sortedNews ->
+                                loadRecyclerView(sortedNews)
+                            }
                         }
 
                     }
