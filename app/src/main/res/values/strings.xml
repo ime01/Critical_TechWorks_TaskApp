@@ -8,4 +8,5 @@
     <string name="fuel_level">description</string>
     <string name="image">headline Image</string>
     <string name="error">Error fetching News Headlines</string>
+    <string name="full_image">full news Image</string>
 </resources>
