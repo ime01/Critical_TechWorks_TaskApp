@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.criticaltechworkstaskapp.R
 import com.example.criticaltechworkstaskapp.common.Status
 import com.example.criticaltechworkstaskapp.common.showSnackbar
 import com.example.criticaltechworkstaskapp.databinding.FragmentTopHeadLinesBinding
@@ -123,6 +125,7 @@ class TopHeadLinesFragment : Fragment() {
 
         }
     }
+
 
     private fun transitionToDetailView(news: News) {
 
