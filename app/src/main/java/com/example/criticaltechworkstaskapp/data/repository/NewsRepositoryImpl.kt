@@ -2,9 +2,12 @@ package com.example.criticaltechworkstaskapp.data.repository
 
 
 import com.example.criticaltechworkstaskapp.BuildConfig
+import com.example.criticaltechworkstaskapp.common.Constants.CNN_FLAVOUR
 import com.example.criticaltechworkstaskapp.common.Constants.CNN_FLAVOUR_NEWS_SOURCE
+import com.example.criticaltechworkstaskapp.common.Constants.GOOGLE_FLAVOUR
 import com.example.criticaltechworkstaskapp.common.Constants.GOOGLE_FLAVOUR_NEWS_SOURCE
 import com.example.criticaltechworkstaskapp.common.Constants.MAIN_APP_NEWS_SOURCE
+import com.example.criticaltechworkstaskapp.common.Constants.REUTERS_FLAVOUR
 import com.example.criticaltechworkstaskapp.common.Constants.REUTERS_FLAVOUR_NEWS_SOURCE
 import com.example.criticaltechworkstaskapp.data.remote.NewsApi
 import com.example.criticaltechworkstaskapp.data.remote.dto.NewsResponse
@@ -18,11 +21,11 @@ class NewsRepositoryImpl @Inject constructor (private val api: NewsApi): NewsRep
     }
 
     private fun checkFlavourReturnNewsSource():String{
-     return   if(BuildConfig.FLAVOR.equals("ReutersFlavour")) {
+     return   if(BuildConfig.FLAVOR.equals(REUTERS_FLAVOUR)) {
          REUTERS_FLAVOUR_NEWS_SOURCE
-        } else if (BuildConfig.FLAVOR.equals("GoogleFlavour")) {
+        } else if (BuildConfig.FLAVOR.equals(GOOGLE_FLAVOUR)) {
            GOOGLE_FLAVOUR_NEWS_SOURCE
-        }else if (BuildConfig.FLAVOR.equals("CnnFlavour")){
+        }else if (BuildConfig.FLAVOR.equals(CNN_FLAVOUR)){
             CNN_FLAVOUR_NEWS_SOURCE
         }else MAIN_APP_NEWS_SOURCE
     }
