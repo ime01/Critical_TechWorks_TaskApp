@@ -24,20 +24,17 @@ class NewsViewModel @Inject constructor(private val getNewsUseCase: GetNewsUseCa
 
     val title = MutableLiveData<String>()
 
-    init {
-        getNews()
-    }
 
+     fun getNews(newsSource:String, apiKey:String) {
 
-     fun getNews() {
-
-         getNewsUseCase().onEach { result ->
+         getNewsUseCase(newsSource,apiKey).onEach { result ->
 
              when (result.status) {
 
                  Status.SUCCESS -> {
 
                      mutableNewsFromNetwork.value = Resource.success(result.data)
+                     title.value = result.data?.first()?.source?.name.orEmpty()
 
                  }
                  Status.ERROR -> {

@@ -9,10 +9,11 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.criticaltechworkstaskapp.BuildConfig
+import com.example.criticaltechworkstaskapp.common.Constants
 import com.example.criticaltechworkstaskapp.common.Status
 import com.example.criticaltechworkstaskapp.common.showSnackbar
 import com.example.criticaltechworkstaskapp.databinding.FragmentTopHeadLinesBinding
@@ -42,18 +43,13 @@ class TopHeadLinesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.getNews(checkFlavourReturnNewsSource(), BuildConfig.API_KEY)
+
         showWelcomeMarqueeText()
         observeState()
         newsAdapter = NewsAdapter{
             transitionToDetailView(it)
         }
-
-       /* viewModel.title.observe(viewLifecycleOwner, Observer { title->
-
-            if (!title.isNullOrEmpty()){
-                Navigation.findNavController(requireView()).currentDestination?.label = title
-            }
-        })*/
     }
 
 
@@ -99,7 +95,6 @@ class TopHeadLinesFragment : Fragment() {
                             val headLinesSortedByDate = it.data?.sortedBy { it.publishedAt }
                             headLinesSortedByDate?.let { sortedNews ->
                                 loadRecyclerView(sortedNews)
-                                viewModel.title.value = sortedNews.first().source?.name
                             }
                         }
 
@@ -134,6 +129,16 @@ class TopHeadLinesFragment : Fragment() {
         val action = TopHeadLinesFragmentDirections.actionTopHeadLinesFragmentToHeadLineDetailsFragment(news)
         Navigation.findNavController(requireView()).navigate(action)
 
+    }
+
+    private fun checkFlavourReturnNewsSource():String{
+        return   if(BuildConfig.FLAVOR.equals(Constants.REUTERS_FLAVOUR)) {
+            Constants.REUTERS_FLAVOUR_NEWS_SOURCE
+        } else if (BuildConfig.FLAVOR.equals(Constants.GOOGLE_FLAVOUR)) {
+            Constants.GOOGLE_FLAVOUR_NEWS_SOURCE
+        }else if (BuildConfig.FLAVOR.equals(Constants.CNN_FLAVOUR)){
+            Constants.CNN_FLAVOUR_NEWS_SOURCE
+        }else Constants.MAIN_APP_NEWS_SOURCE
     }
 
 

@@ -5,6 +5,6 @@ import com.example.criticaltechworkstaskapp.data.remote.dto.NewsResponse
 
 interface NewsRepository {
 
-    suspend fun getNews(): NewsResponse
+    suspend fun getNews(newsSource:String, apiKey:String): NewsResponse
 
 }

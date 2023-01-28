@@ -13,20 +13,20 @@ import javax.inject.Inject
 class GetNewsUseCase @Inject constructor (private val repository: NewsRepository) {
 
 
-    operator fun invoke (): Flow<Resource<List<News>>> = flow {
+    operator fun invoke (newsSource:String, apiKey:String): Flow<Resource<List<News>>> = flow {
 
         try {
 
             emit(Resource.loading())
 
-            val news = repository.getNews().articles?.map {
+            val news = repository.getNews(newsSource,apiKey).articles?.map {
                 it.toNews()
             }
 
             emit(Resource.success(news))
 
         }catch (e:HttpException){
-            emit(Resource.error( e.toString() ?: "An unexpected error occurred"))
+            emit(Resource.error(e.toString()))
 
         }catch (e: IOException){
             emit(Resource.error("Couldn't reach the server, Check your internet connection and try again"))
