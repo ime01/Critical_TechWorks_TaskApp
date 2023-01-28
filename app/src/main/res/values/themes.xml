@@ -18,7 +18,7 @@
 
     <style name="splashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
-        <item name="android:statusBarColor">@color/critical_tech_work</item>
+        <item name="android:statusBarColor">@color/purple_500</item>
     </style>
 
     <style name="UserNameStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">

@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
+import com.example.criticaltechworkstaskapp.R
 import com.example.criticaltechworkstaskapp.common.Constants.REQUEST_CODE
 import com.example.criticaltechworkstaskapp.common.showToast
 import com.example.criticaltechworkstaskapp.databinding.FragmentFingerPrintLoginBinding
@@ -54,7 +55,7 @@ class FingerPrintLoginFragment : Fragment() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
 
-                requireContext().showToast("FingerPrint Authenticated Successfully")
+                requireContext().showToast(getString(R.string.success))
                 val action = FingerPrintLoginFragmentDirections.actionFingerPrintLoginFragmentToTopHeadLinesFragment()
                 Navigation.findNavController(requireView()).navigate(action)
 
@@ -62,14 +63,14 @@ class FingerPrintLoginFragment : Fragment() {
 
             override fun onAuthenticationFailed() {
                 super.onAuthenticationFailed()
-                requireContext().showToast("Authentication Failed")
+                requireContext().showToast(getString(R.string.failed))
             }
         })
 
         promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("FingerPrint Authentication Required")
-            .setSubtitle("Enter your FingerPrint")
-            .setNegativeButtonText("Go to News Headlines")
+            .setTitle(getString(R.string.security_title))
+            .setSubtitle(getString(R.string.action))
+            .setNegativeButtonText(getString(R.string.opening))
             .build()
 
         binding.btnAuthenticate.setOnClickListener {
@@ -84,12 +85,11 @@ class FingerPrintLoginFragment : Fragment() {
         when(biometricManager.canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)){
 
             BiometricManager.BIOMETRIC_SUCCESS->{
-                requireContext().showToast("FingerPrint Biometric Supported")
+                requireContext().showToast(getString(R.string.biometrics_supported))
                 binding.btnAuthenticate.isEnabled=true
 
             }
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE->{
-                requireContext().showToast("FingerPrint Biometrics Not Supported")
                 val action = FingerPrintLoginFragmentDirections.actionFingerPrintLoginFragmentToTopHeadLinesFragment()
                 Navigation.findNavController(requireView()).navigate(action)
 

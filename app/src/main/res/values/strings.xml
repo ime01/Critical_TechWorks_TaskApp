@@ -15,4 +15,10 @@
     <string name="exit">Exit App</string>
     <string name="fingerprint_lock_icon">fingerprint lock icon</string>
     <string name="login">Login</string>
+    <string name="success">FingerPrint Authenticated Successfully</string>
+    <string name="failed">Authentication Failed</string>
+    <string name="security_title">FingerPrint Authentication Required</string>
+    <string name="action">Enter your FingerPrint</string>
+    <string name="opening">Go to News Headlines</string>
+    <string name="biometrics_supported">FingerPrint Biometric Supported</string>
 </resources>
