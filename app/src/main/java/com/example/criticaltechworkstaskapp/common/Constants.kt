@@ -10,4 +10,5 @@ object Constants {
     const val REUTERS_FLAVOUR = "ReutersFlavour"
     const val GOOGLE_FLAVOUR = "GoogleFlavour"
     const val CNN_FLAVOUR = "CnnFlavour"
+    const val REQUEST_CODE = 200
 }

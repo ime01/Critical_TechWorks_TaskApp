@@ -9,4 +9,10 @@
     <string name="image">headline Image</string>
     <string name="error">Error fetching News Headlines</string>
     <string name="full_image">full news Image</string>
+    <string name="fingerprint_title">Finger Print Required</string>
+    <string name="please_enter">Please enter your fingerprint to use this app</string>
+    <string name="entered">Entered</string>
+    <string name="exit">Exit App</string>
+    <string name="fingerprint_lock_icon">fingerprint lock icon</string>
+    <string name="login">Login</string>
 </resources>

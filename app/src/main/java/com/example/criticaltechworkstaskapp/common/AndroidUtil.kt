@@ -6,13 +6,12 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-fun AppCompatActivity.showToast(message: String) {
+fun Context.showToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 

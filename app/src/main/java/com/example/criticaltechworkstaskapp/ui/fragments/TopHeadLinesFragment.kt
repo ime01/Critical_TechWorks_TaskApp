@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.criticaltechworkstaskapp.BuildConfig
+import com.example.criticaltechworkstaskapp.R
 import com.example.criticaltechworkstaskapp.common.Constants
 import com.example.criticaltechworkstaskapp.common.Status
 import com.example.criticaltechworkstaskapp.common.showSnackbar
@@ -34,7 +36,6 @@ class TopHeadLinesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentTopHeadLinesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -44,12 +45,12 @@ class TopHeadLinesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getNews(checkFlavourReturnNewsSource(), BuildConfig.API_KEY)
-
         showWelcomeMarqueeText()
         observeState()
         newsAdapter = NewsAdapter{
             transitionToDetailView(it)
         }
+
     }
 
 
@@ -140,9 +141,5 @@ class TopHeadLinesFragment : Fragment() {
             Constants.CNN_FLAVOUR_NEWS_SOURCE
         }else Constants.MAIN_APP_NEWS_SOURCE
     }
-
-
-
-
 
 }
