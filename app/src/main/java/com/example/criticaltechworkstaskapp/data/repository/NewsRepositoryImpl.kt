@@ -14,6 +14,16 @@ import javax.inject.Inject
 class NewsRepositoryImpl @Inject constructor (private val api: NewsApi): NewsRepository {
 
     override suspend fun getNews(): NewsResponse {
-       return api.getNewsHeadlines(REUTERS_FLAVOUR_NEWS_SOURCE, BuildConfig.API_KEY)
+       return api.getNewsHeadlines(checkFlavourReturnNewsSource(), BuildConfig.API_KEY)
+    }
+
+    private fun checkFlavourReturnNewsSource():String{
+     return   if(BuildConfig.FLAVOR.equals("ReutersFlavour")) {
+         REUTERS_FLAVOUR_NEWS_SOURCE
+        } else if (BuildConfig.FLAVOR.equals("GoogleFlavour")) {
+           GOOGLE_FLAVOUR_NEWS_SOURCE
+        }else if (BuildConfig.FLAVOR.equals("CnnFlavour")){
+            CNN_FLAVOUR_NEWS_SOURCE
+        }else MAIN_APP_NEWS_SOURCE
     }
 }

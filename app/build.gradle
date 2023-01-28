@@ -25,12 +25,12 @@ android {
         buildConfigField "String", "API_KEY", "\"${properties.getProperty("API_KEY")}\""
     }
 
-    flavorDimensions "cwtmain-app"
+    flavorDimensions "cwt-app"
     productFlavors {
-        MainAppFlavour { dimension "cwtmain-app" }
-        CnnFlavour { dimension "cwtmain-app" }
-        ReutersFlavour {dimension "cwtmain-app"}
-        GoogleNews{dimension "cwtmain-app"}
+        MainAppFlavour { dimension "cwt-app" }
+        CnnFlavour { dimension "cwt-app" }
+        ReutersFlavour {dimension "cwt-app"}
+        GoogleFlavour{dimension "cwt-app"}
     }
 
 
