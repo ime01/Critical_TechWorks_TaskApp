@@ -7,17 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.criticaltechworkstaskapp.R
+import com.example.criticaltechworkstaskapp.common.formatDateTime
 import com.example.criticaltechworkstaskapp.databinding.FragmentHeadLineDetailsBinding
-import com.example.criticaltechworkstaskapp.databinding.FragmentTopHeadLinesBinding
 import com.example.criticaltechworkstaskapp.domian.model.News
-
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HeadLineDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-
 
 class HeadLineDetailsFragment : Fragment() {
 
@@ -52,7 +44,7 @@ class HeadLineDetailsFragment : Fragment() {
                 dtitle.text = title
                 ddescription.text = description
                 dcontent.text = content
-                ddate.text = publishedAt
+                ddate.text =  formatDateTime(publishedAt)
 
                 Glide.with(imageDetailLarge)
                     .load(news?.urlToImage)

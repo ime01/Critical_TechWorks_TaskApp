@@ -8,6 +8,8 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 fun AppCompatActivity.showToast(message: String) {
@@ -18,6 +20,28 @@ fun showSnackbar(view: View, string: String) {
 
         Snackbar.make(view, string, Snackbar.LENGTH_LONG).show()
     }
+
+fun formatDateTime(date: String?): String {
+    return try{
+        val parsing = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+        val output = SimpleDateFormat("dd/MMM/yyyy h:mm a", Locale.getDefault())
+        output.format(parsing.parse(date ?: "") ?: Date())
+    }catch (ex: Exception){
+        ex.printStackTrace()
+        formatDateTime2(date)
+    }
+}
+
+fun formatDateTime2(date: String?): String {
+    return try{
+        val parsing = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+        val output = SimpleDateFormat("dd/MMM/yyyy h:mm a", Locale.getDefault())
+        output.format(parsing.parse(date ?: "") ?: Date())
+    }catch (ex: Exception){
+        ex.printStackTrace()
+        ""
+    }
+}
 
 
 @Suppress("DEPRECATION")

@@ -132,7 +132,7 @@ class TopHeadLinesFragment : Fragment() {
     }
 
     private fun checkFlavourReturnNewsSource():String{
-        return   if(BuildConfig.FLAVOR.equals(Constants.REUTERS_FLAVOUR)) {
+        return  if(BuildConfig.FLAVOR.equals(Constants.REUTERS_FLAVOUR)) {
             Constants.REUTERS_FLAVOUR_NEWS_SOURCE
         } else if (BuildConfig.FLAVOR.equals(Constants.GOOGLE_FLAVOUR)) {
             Constants.GOOGLE_FLAVOUR_NEWS_SOURCE
