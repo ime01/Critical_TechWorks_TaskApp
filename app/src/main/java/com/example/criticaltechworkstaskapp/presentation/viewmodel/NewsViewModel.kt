@@ -17,7 +17,12 @@ class NewsViewModel @Inject constructor(private val getNewsUseCase: GetNewsUseCa
 
 
 
-       val newsFromNetwork = MutableLiveData<Resource<List<News>>>()
+
+    private val mutableNewsFromNetwork = MutableLiveData<Resource<List<News>>>()
+    val newsFromNetwork: LiveData<Resource<List<News>>>
+        get() = mutableNewsFromNetwork
+
+    val title = MutableLiveData<String>()
 
     init {
         getNews()
@@ -32,17 +37,17 @@ class NewsViewModel @Inject constructor(private val getNewsUseCase: GetNewsUseCa
 
                  Status.SUCCESS -> {
 
-                     newsFromNetwork.value = Resource.success(result.data!!)
+                     mutableNewsFromNetwork.value = Resource.success(result.data)
 
                  }
                  Status.ERROR -> {
 
-                     newsFromNetwork.value = Resource.error(result.message!!)
+                     mutableNewsFromNetwork.value = Resource.error(result.message!!)
 
                  }
                  Status.LOADING -> {
 
-                     newsFromNetwork.value = Resource.loading()
+                     mutableNewsFromNetwork.value = Resource.loading()
 
                  }
 

@@ -2,11 +2,14 @@ package com.example.criticaltechworkstaskapp.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.criticaltechworkstaskapp.R
 import com.example.criticaltechworkstaskapp.databinding.ActivityMainBinding
+import com.example.criticaltechworkstaskapp.presentation.viewmodel.NewsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var navController: NavController
+    private val viewModel: NewsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,11 +26,15 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.Theme_CriticalTechWorksTaskApp)
         setContentView(binding.root)
 
-
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         setupActionBarWithNavController(navController)
+        viewModel.title.observe(this) { sourceNmae ->
+            if (!sourceNmae.isNullOrEmpty()) {
+                supportActionBar?.title = sourceNmae
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

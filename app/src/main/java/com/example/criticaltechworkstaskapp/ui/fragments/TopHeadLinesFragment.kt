@@ -27,8 +27,6 @@ class TopHeadLinesFragment : Fragment() {
     private var _binding: FragmentTopHeadLinesBinding? = null
     private val binding by lazy { _binding!! }
     lateinit var newsAdapter  : NewsAdapter
-
-
     private val viewModel: NewsViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -50,6 +48,12 @@ class TopHeadLinesFragment : Fragment() {
             transitionToDetailView(it)
         }
 
+       /* viewModel.title.observe(viewLifecycleOwner, Observer { title->
+
+            if (!title.isNullOrEmpty()){
+                Navigation.findNavController(requireView()).currentDestination?.label = title
+            }
+        })*/
     }
 
 
@@ -70,7 +74,7 @@ class TopHeadLinesFragment : Fragment() {
 
         binding.apply {
 
-            viewModel.newsFromNetwork.observe(viewLifecycleOwner, Observer { news ->
+            viewModel.newsFromNetwork.observe(viewLifecycleOwner) { news ->
 
                 news?.also {
                     when (it.status) {
@@ -85,7 +89,6 @@ class TopHeadLinesFragment : Fragment() {
 
                         }
                         Status.LOADING -> {
-
                             shimmerFrameLayout.startShimmer()
                             shimmerFrameLayout.visibility = View.VISIBLE
 
@@ -93,17 +96,17 @@ class TopHeadLinesFragment : Fragment() {
 
                         Status.SUCCESS -> {
 
-                            val headLinesSortedByDated = it.data?.sortedBy { it.publishedAt }
-
-                            headLinesSortedByDated?.let { sortedNews ->
+                            val headLinesSortedByDate = it.data?.sortedBy { it.publishedAt }
+                            headLinesSortedByDate?.let { sortedNews ->
                                 loadRecyclerView(sortedNews)
+                                viewModel.title.value = sortedNews.first().source?.name
                             }
                         }
 
                     }
                 }
 
-            })
+            }
         }
 
     }

@@ -43,6 +43,7 @@ data class NewsResponse(
 
 
 
+
 fun NewsDto.toNews():News{
     return News(
         author = author,
