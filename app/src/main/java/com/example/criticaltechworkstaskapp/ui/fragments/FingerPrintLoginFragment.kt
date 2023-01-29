@@ -8,15 +8,17 @@ import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
 import android.os.Bundle
 import android.provider.Settings
+import android.provider.Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import com.example.criticaltechworkstaskapp.R
 import com.example.criticaltechworkstaskapp.common.Constants.REQUEST_CODE
+import com.example.criticaltechworkstaskapp.common.showSnackbar
 import com.example.criticaltechworkstaskapp.common.showToast
 import com.example.criticaltechworkstaskapp.databinding.FragmentFingerPrintLoginBinding
 import java.util.concurrent.Executor
@@ -74,13 +76,14 @@ class FingerPrintLoginFragment : Fragment() {
             .build()
 
         binding.btnAuthenticate.setOnClickListener {
+            requireContext().showToast("Login clicked")
             biometricPrompt.authenticate(promptInfo)
         }
     }
 
 
-    fun checkDeviceHasBiometric(){
-        val biometricManager = BiometricManager.from(requireContext())
+    private fun checkDeviceHasBiometric(){
+        val biometricManager = BiometricManager.from(requireActivity())
 
         when(biometricManager.canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)){
 
@@ -95,11 +98,20 @@ class FingerPrintLoginFragment : Fragment() {
 
             }
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED->{
-                val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
-                    putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED, BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
+                binding.btnAuthenticate.isEnabled=true
+                Log.d("NOT ENROLLED", "FINGERPRINT NOT ENROLLED")
+                requireContext().showToast("Fingerprint Not Enrolled")
 
+              //  val enrollIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    val enrollIntent =   Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
+                        putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED, BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
+                    }
+                    startActivityForResult(enrollIntent, REQUEST_CODE)
+                } else {
+                    showSnackbar(binding.btnAuthenticate, "Please Enable FingerPrint Authentication in Settings")
                 }
-                startActivityForResult(enrollIntent, REQUEST_CODE)
+
             }
 
         }

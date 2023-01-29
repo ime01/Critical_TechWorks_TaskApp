@@ -2,15 +2,21 @@ package com.example.criticaltechworkstaskapp.ui.fragments
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.criticaltechworkstaskapp.BuildConfig
@@ -32,6 +38,7 @@ class TopHeadLinesFragment : Fragment() {
     lateinit var newsAdapter  : NewsAdapter
     private val viewModel: NewsViewModel by activityViewModels()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,15 +50,36 @@ class TopHeadLinesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewModel.getNews(checkFlavourReturnNewsSource(), BuildConfig.API_KEY)
+        loadSettings()
         showWelcomeMarqueeText()
+        setUpMenu()
         observeState()
         newsAdapter = NewsAdapter{
             transitionToDetailView(it)
         }
 
     }
+
+    private fun setUpMenu() {
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_layout, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when (menuItem.itemId) {
+                    R.id.settings -> {
+                        findNavController().navigate(R.id.action_topHeadLinesFragment_to_settingsFragment2)
+                        return true
+                    }
+                }
+                return false
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
 
 
     private fun showWelcomeMarqueeText() {
@@ -112,6 +140,7 @@ class TopHeadLinesFragment : Fragment() {
 
         binding.apply {
             errorImage.isVisible = false
+            errorText.isVisible = false
             newsAdapter.submitList(news)
             rvList.layoutManager = LinearLayoutManager(requireContext())
             rvList.adapter = newsAdapter
@@ -129,6 +158,20 @@ class TopHeadLinesFragment : Fragment() {
 
         val action = TopHeadLinesFragmentDirections.actionTopHeadLinesFragmentToHeadLineDetailsFragment(news)
         Navigation.findNavController(requireView()).navigate(action)
+
+    }
+
+
+    private fun loadSettings() {
+        val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
+
+        val nightMode = sp.getBoolean("nightorday", false)
+
+        if (nightMode){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        }
 
     }
 
