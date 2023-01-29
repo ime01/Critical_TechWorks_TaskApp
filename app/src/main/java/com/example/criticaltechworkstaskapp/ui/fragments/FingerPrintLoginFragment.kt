@@ -76,7 +76,6 @@ class FingerPrintLoginFragment : Fragment() {
             .build()
 
         binding.btnAuthenticate.setOnClickListener {
-            requireContext().showToast("Login clicked")
             biometricPrompt.authenticate(promptInfo)
         }
     }
@@ -98,19 +97,18 @@ class FingerPrintLoginFragment : Fragment() {
 
             }
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED->{
-                binding.btnAuthenticate.isEnabled=true
-                Log.d("NOT ENROLLED", "FINGERPRINT NOT ENROLLED")
-                requireContext().showToast("Fingerprint Not Enrolled")
-
-              //  val enrollIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     val enrollIntent =   Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
                         putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED, BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
                     }
                     startActivityForResult(enrollIntent, REQUEST_CODE)
                 } else {
-                    showSnackbar(binding.btnAuthenticate, "Please Enable FingerPrint Authentication in Settings")
+                    val action = FingerPrintLoginFragmentDirections.actionFingerPrintLoginFragmentToTopHeadLinesFragment()
+                    Navigation.findNavController(requireView()).navigate(action)
+
                 }
+
 
             }
 
