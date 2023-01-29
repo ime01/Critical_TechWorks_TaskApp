@@ -8,7 +8,7 @@
     tools:context=".ui.fragments.FingerPrintLoginFragment">
 
     <ImageView
-        android:id="@+id/imgFingure"
+        android:id="@+id/lock_icon"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:contentDescription="@string/fingerprint_lock_icon"
@@ -21,13 +21,13 @@
         app:layout_constraintVertical_bias="0.371" />
 
     <TextView
-        android:id="@+id/tvMsg"
+        android:id="@+id/finger_print_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/please_enter"
         android:layout_marginTop="20dp"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/imgFingure"
+        app:layout_constraintTop_toBottomOf="@id/lock_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -41,6 +41,6 @@
         android:text="@string/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvMsg" />
+        app:layout_constraintTop_toBottomOf="@id/finger_print_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

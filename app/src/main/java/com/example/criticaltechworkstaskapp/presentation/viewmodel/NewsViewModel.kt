@@ -27,6 +27,7 @@ class NewsViewModel @Inject constructor(private val getNewsUseCase: GetNewsUseCa
 
      fun getNews(newsSource:String, apiKey:String) {
 
+
          getNewsUseCase(newsSource,apiKey).onEach { result ->
 
              when (result.status) {
