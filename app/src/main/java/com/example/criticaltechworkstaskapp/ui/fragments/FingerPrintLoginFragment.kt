@@ -8,8 +8,6 @@ import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
 import android.os.Bundle
 import android.provider.Settings
-import android.provider.Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +16,6 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import com.example.criticaltechworkstaskapp.R
 import com.example.criticaltechworkstaskapp.common.Constants.REQUEST_CODE
-import com.example.criticaltechworkstaskapp.common.showSnackbar
 import com.example.criticaltechworkstaskapp.common.showToast
 import com.example.criticaltechworkstaskapp.databinding.FragmentFingerPrintLoginBinding
 import java.util.concurrent.Executor
@@ -104,9 +101,9 @@ class FingerPrintLoginFragment : Fragment() {
                     }
                     startActivityForResult(enrollIntent, REQUEST_CODE)
                 } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    startActivity( Intent(Settings.ACTION_FINGERPRINT_ENROLL));
+                    startActivity( Intent(Settings.ACTION_FINGERPRINT_ENROLL))
                 } else {
-                    startActivity( Intent(Settings.ACTION_SECURITY_SETTINGS));
+                    startActivity( Intent(Settings.ACTION_SECURITY_SETTINGS))
                 }
 
 

@@ -2,13 +2,12 @@ package com.example.criticaltechworkstaskapp.ui.fragments
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.LinearLayout
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
@@ -24,11 +23,14 @@ import com.example.criticaltechworkstaskapp.R
 import com.example.criticaltechworkstaskapp.common.Constants
 import com.example.criticaltechworkstaskapp.common.Status
 import com.example.criticaltechworkstaskapp.common.showSnackbar
+import com.example.criticaltechworkstaskapp.common.showToast
 import com.example.criticaltechworkstaskapp.databinding.FragmentTopHeadLinesBinding
 import com.example.criticaltechworkstaskapp.domian.model.News
 import com.example.criticaltechworkstaskapp.presentation.adapter.NewsAdapter
 import com.example.criticaltechworkstaskapp.presentation.viewmodel.NewsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class TopHeadLinesFragment : Fragment() {
@@ -66,7 +68,27 @@ class TopHeadLinesFragment : Fragment() {
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_layout, menu)
+
+                val menuItem = menu.findItem(R.id.search_news_title)
+                val searchView = menuItem.actionView as SearchView
+
+
+                searchView.setOnQueryTextListener(object : OnQueryTextListener{
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                       return false
+                    }
+
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        if (newText != null) {
+                            filterByNewsTitle(newText)
+                        }
+                        return true
+                    }
+
+                })
+
             }
+
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
@@ -150,6 +172,25 @@ class TopHeadLinesFragment : Fragment() {
             shimmerFrameLayout.stopShimmer()
             shimmerFrameLayout.visibility = View.GONE
 
+        }
+    }
+
+    private fun filterByNewsTitle(text: String) {
+
+        val filteredlist: ArrayList<News> = ArrayList()
+
+        viewModel.newsFromNetwork.observe(viewLifecycleOwner) { allNews->
+            for (item in allNews?.data.orEmpty()) {
+                if (item.title?.lowercase(Locale.getDefault())?.contains(text.lowercase(Locale.getDefault())) == true) {
+                    filteredlist.add(item)
+                }
+            }
+        }
+
+        if (filteredlist.isEmpty()) {
+            requireContext().showToast("No News Title Found..")
+        } else {
+            newsAdapter.submitList(filteredlist)
         }
     }
 

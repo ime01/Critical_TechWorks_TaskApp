@@ -53,5 +53,4 @@ class NewsViewModel @Inject constructor(private val getNewsUseCase: GetNewsUseCa
 
      }
 
-
 }
