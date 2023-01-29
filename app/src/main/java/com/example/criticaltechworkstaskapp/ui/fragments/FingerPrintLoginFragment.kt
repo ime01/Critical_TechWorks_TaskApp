@@ -84,7 +84,7 @@ class FingerPrintLoginFragment : Fragment() {
     private fun checkDeviceHasBiometric(){
         val biometricManager = BiometricManager.from(requireActivity())
 
-        when(biometricManager.canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)){
+        when(biometricManager.canAuthenticate(BIOMETRIC_STRONG)){
 
             BiometricManager.BIOMETRIC_SUCCESS->{
                 requireContext().showToast(getString(R.string.biometrics_supported))
@@ -97,16 +97,16 @@ class FingerPrintLoginFragment : Fragment() {
 
             }
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED->{
-                
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     val enrollIntent =   Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
                         putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED, BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
                     }
                     startActivityForResult(enrollIntent, REQUEST_CODE)
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    startActivity( Intent(Settings.ACTION_FINGERPRINT_ENROLL));
                 } else {
-                    val action = FingerPrintLoginFragmentDirections.actionFingerPrintLoginFragmentToTopHeadLinesFragment()
-                    Navigation.findNavController(requireView()).navigate(action)
-
+                    startActivity( Intent(Settings.ACTION_SECURITY_SETTINGS));
                 }
 
 
