@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.LinearLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
@@ -20,10 +21,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.criticaltechworkstaskapp.BuildConfig
 import com.example.criticaltechworkstaskapp.R
-import com.example.criticaltechworkstaskapp.common.Constants
-import com.example.criticaltechworkstaskapp.common.Status
-import com.example.criticaltechworkstaskapp.common.showSnackbar
-import com.example.criticaltechworkstaskapp.common.showToast
+import com.example.criticaltechworkstaskapp.common.*
 import com.example.criticaltechworkstaskapp.databinding.FragmentTopHeadLinesBinding
 import com.example.criticaltechworkstaskapp.domian.model.News
 import com.example.criticaltechworkstaskapp.presentation.adapter.NewsAdapter
@@ -63,6 +61,92 @@ class TopHeadLinesFragment : Fragment() {
 
     }
 
+
+
+
+    private fun showWelcomeMarqueeText() {
+
+        binding.apply {
+
+            welcomeTextMarquee.apply {
+                setSingleLine()
+                ellipsize = TextUtils.TruncateAt.MARQUEE
+                marqueeRepeatLimit = -1
+                isSelected = true
+            }
+        }
+    }
+
+    fun observeState(){
+
+        if (getConnectionType(requireContext())) {
+            binding.apply {
+
+                viewModel.newsFromNetwork.observe(viewLifecycleOwner) { news ->
+
+                    news?.also {
+                        when (it.status) {
+                            Status.ERROR -> {
+
+                                shimmerFrameLayout.stopShimmer()
+                                shimmerFrameLayout.visibility = View.GONE
+                                errorImage.isVisible = true
+                                errorText.text = it.message
+                                errorText.isVisible = true
+                                showSnackbar(welcomeTextMarquee, it.message!!)
+
+                            }
+                            Status.LOADING -> {
+                                shimmerFrameLayout.startShimmer()
+                                shimmerFrameLayout.visibility = View.VISIBLE
+
+                            }
+
+                            Status.SUCCESS -> {
+
+                                val headLinesSortedByDate = it.data?.sortedBy { it.publishedAt }
+                                headLinesSortedByDate?.let { sortedNews ->
+                                    loadRecyclerView(sortedNews)
+                                }
+                            }
+
+                        }
+                    }
+
+                }
+            }
+
+
+        }else{
+
+            AlertDialog.Builder(this.requireContext()).setTitle(getString(R.string.no_internet))
+                .setMessage(getString(R.string.check_your_internet))
+                .setPositiveButton(getString(R.string.ok)) { _, _ -> }
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show()
+        }
+
+    }
+
+
+    private fun loadRecyclerView(news: List<News>) {
+
+        binding.apply {
+            errorImage.isVisible = false
+            errorText.isVisible = false
+            newsAdapter.submitList(news)
+            rvList.layoutManager = LinearLayoutManager(requireContext())
+            rvList.adapter = newsAdapter
+            val decoration = DividerItemDecoration(requireContext(), LinearLayout.VERTICAL)
+            rvList.addItemDecoration(decoration)
+
+            shimmerFrameLayout.stopShimmer()
+            shimmerFrameLayout.visibility = View.GONE
+
+        }
+    }
+
+
     private fun setUpMenu() {
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
 
@@ -75,7 +159,7 @@ class TopHeadLinesFragment : Fragment() {
 
                 searchView.setOnQueryTextListener(object : OnQueryTextListener{
                     override fun onQueryTextSubmit(query: String?): Boolean {
-                       return false
+                        return false
                     }
 
                     override fun onQueryTextChange(newText: String?): Boolean {
@@ -102,78 +186,6 @@ class TopHeadLinesFragment : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-
-
-    private fun showWelcomeMarqueeText() {
-
-        binding.apply {
-
-            welcomeTextMarquee.apply {
-                setSingleLine()
-                ellipsize = TextUtils.TruncateAt.MARQUEE
-                marqueeRepeatLimit = -1
-                isSelected = true
-            }
-        }
-    }
-
-    fun observeState(){
-
-        binding.apply {
-
-            viewModel.newsFromNetwork.observe(viewLifecycleOwner) { news ->
-
-                news?.also {
-                    when (it.status) {
-                        Status.ERROR -> {
-
-                            shimmerFrameLayout.stopShimmer()
-                            shimmerFrameLayout.visibility = View.GONE
-                            errorImage.isVisible = true
-                            errorText.text = it.message
-                            errorText.isVisible = true
-                            showSnackbar(welcomeTextMarquee, it.message!!)
-
-                        }
-                        Status.LOADING -> {
-                            shimmerFrameLayout.startShimmer()
-                            shimmerFrameLayout.visibility = View.VISIBLE
-
-                        }
-
-                        Status.SUCCESS -> {
-
-                            val headLinesSortedByDate = it.data?.sortedBy { it.publishedAt }
-                            headLinesSortedByDate?.let { sortedNews ->
-                                loadRecyclerView(sortedNews)
-                            }
-                        }
-
-                    }
-                }
-
-            }
-        }
-
-    }
-
-
-    private fun loadRecyclerView(news: List<News>) {
-
-        binding.apply {
-            errorImage.isVisible = false
-            errorText.isVisible = false
-            newsAdapter.submitList(news)
-            rvList.layoutManager = LinearLayoutManager(requireContext())
-            rvList.adapter = newsAdapter
-            val decoration = DividerItemDecoration(requireContext(), LinearLayout.VERTICAL)
-            rvList.addItemDecoration(decoration)
-
-            shimmerFrameLayout.stopShimmer()
-            shimmerFrameLayout.visibility = View.GONE
-
-        }
-    }
 
     private fun filterByNewsTitle(text: String) {
 

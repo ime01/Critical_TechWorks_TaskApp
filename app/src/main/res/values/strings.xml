@@ -39,4 +39,7 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="search_title">Search News Title</string>
+    <string name="ok">Ok</string>
+    <string name="no_internet">No Internet Connection</string>
+    <string name="check_your_internet">Please check your internet connection and try again, Your Data is currently fetched from Local Room Database</string>
 </resources>

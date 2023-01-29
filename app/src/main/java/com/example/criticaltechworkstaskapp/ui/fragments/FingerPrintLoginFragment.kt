@@ -94,8 +94,17 @@ class FingerPrintLoginFragment : Fragment() {
 
             }
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED->{
+                //biometric fingerprint capability present but no fingerprint configured
+                val action = FingerPrintLoginFragmentDirections.actionFingerPrintLoginFragmentToTopHeadLinesFragment()
+                Navigation.findNavController(requireView()).navigate(action)
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+
+
+                //Initially added this block of code to open settings for the user to assign fingerprint,
+                //upon reading the document again it says to just open the app,so this is commented out,
+                //uncomment should you wish for the app to open fingerprint registration in settings
+
+               /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     val enrollIntent =   Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
                         putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED, BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
                     }
@@ -104,7 +113,7 @@ class FingerPrintLoginFragment : Fragment() {
                     startActivity( Intent(Settings.ACTION_FINGERPRINT_ENROLL))
                 } else {
                     startActivity( Intent(Settings.ACTION_SECURITY_SETTINGS))
-                }
+                }*/
 
 
             }
