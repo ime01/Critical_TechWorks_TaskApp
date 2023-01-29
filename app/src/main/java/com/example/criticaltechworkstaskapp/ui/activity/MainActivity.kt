@@ -6,6 +6,8 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.criticaltechworkstaskapp.R
 import com.example.criticaltechworkstaskapp.databinding.ActivityMainBinding
@@ -29,7 +31,9 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        setupActionBarWithNavController(navController)
+        val appBarConfiguration = AppBarConfiguration.Builder(setOf(R.id.fingerPrintLoginFragment, R.id.topHeadLinesFragment)).build()
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
         viewModel.title.observe(this) { sourceNmae ->
             if (!sourceNmae.isNullOrEmpty()) {
                 supportActionBar?.title = sourceNmae
