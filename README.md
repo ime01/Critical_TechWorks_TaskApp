@@ -1,5 +1,5 @@
 # Critical_TechWorks_TaskApp
-Android App built for my Role at Critical TechWorks, built in line with the rquirement document sent, however i have also gone ahead to add some extra features as you'll find in the app, such as in app NEWS TITLE SEARCH, SETTINGS TO SWITCH TO DAY/NIGHT MODE,(BIOMETRIC NAVIGATION TO FINGERPRINT SETUP IF WISHED)
+Android App built for my Role at Critical TechWorks, built in line with the requirement document sent, however i have also gone ahead to add some extra features as you'll find in the app, such as in app NEWS TITLE SEARCH, SETTINGS TO SWITCH TO DAY/NIGHT MODE,(BIOMETRIC NAVIGATION TO FINGERPRINT SETUP IF WISHED)
 
 
 
