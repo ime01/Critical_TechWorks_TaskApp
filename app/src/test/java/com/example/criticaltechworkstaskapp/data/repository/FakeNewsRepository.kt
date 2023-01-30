@@ -3,7 +3,6 @@ package com.example.criticaltechworkstaskapp.data.repository
 import com.example.criticaltechworkstaskapp.data.remote.dto.NewsDto
 import com.example.criticaltechworkstaskapp.data.remote.dto.NewsResponse
 import com.example.criticaltechworkstaskapp.data.remote.dto.SourceDto
-import com.example.criticaltechworkstaskapp.domian.model.Source
 import com.example.criticaltechworkstaskapp.domian.repository.NewsRepository
 
 class FakeNewsRepository: NewsRepository {
