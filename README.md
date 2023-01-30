@@ -65,5 +65,9 @@ SINGLE ACTIVITY WITH MULTIPLE FRAGMENTS
 <img width="1440" alt="Screenshot 2023-01-30 at 02 10 18" src="https://user-images.githubusercontent.com/44091450/215370632-16f8540b-2d63-44cc-a472-7fd1f2f7479e.png">
 <img width="1440" alt="Screenshot 2023-01-30 at 02 10 59" src="https://user-images.githubusercontent.com/44091450/215370658-d134cc6f-829c-4992-aeae-22bdb0c8ff4b.png">
 
+<img width="1440" alt="Screenshot 2023-01-30 at 02 46 24" src="https://user-images.githubusercontent.com/44091450/215370858-931488cd-2a17-42f9-a582-73a28c4015c7.png">
+<img width="1440" alt="Screenshot 2023-01-30 at 02 16 21" src="https://user-images.githubusercontent.com/44091450/215370869-8b2cfb1f-8268-422e-8f62-1ec2f386dcae.png">
+<img width="1440" alt="Screenshot 2023-01-30 at 02 03 17" src="https://user-images.githubusercontent.com/44091450/215370903-f58f22fe-9dc9-44be-b660-7c66f8c269bc.png">
+
 
 
