@@ -44,7 +44,6 @@ GLIDE
 
 
 <img width="1440" alt="Screenshot 2023-01-30 at 02 18 46" src="https://user-images.githubusercontent.com/44091450/215368934-2ebd54d3-d8f5-4cb6-b883-24d68fa517e8.png">
-<img width="1440" alt="Screenshot 2023-01-30 at 02 08 42" src="https://user-images.githubusercontent.com/44091450/215368946-c7ac4478-860b-4
 
 
 
