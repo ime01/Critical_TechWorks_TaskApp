@@ -37,8 +37,9 @@ android {
 
     buildTypes {
 
-        release {
+        getByName("release") {
             minifyEnabled false
+
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             ext.config = getProps('../config/release.properties')
@@ -46,6 +47,7 @@ android {
             ext.config.each{p->
 
                 if (p.key == "APPNAME"){
+                    manifestPlaceholders["app_name"] = p.value
                     resValue "string","app_name",p.value
                 }
 
@@ -59,7 +61,7 @@ android {
 
         }
 
-        debug {
+        getByName("debug") {
 
             minifyEnabled false
 
@@ -71,6 +73,7 @@ android {
 
                 if (p.key == "APPNAME") {
 
+                    manifestPlaceholders["app_name"] = p.value
                     resValue "string", "app_name", p.value.replace('"', '')
 
                 } else if (p.key == "APPLICATION_ID_SUFFIX") {
@@ -85,7 +88,8 @@ android {
 
 
 
-            dev {
+        create("dev") {
+            initWith(getByName("debug"))
 
                 minifyEnabled false
 
@@ -98,6 +102,7 @@ android {
 
                     if (p.key == "APPNAME") {
 
+                        manifestPlaceholders["app_name"] = p.value
                         resValue "string", "app_name", p.value
 
                     } else if (p.key == "APPLICATION_ID_SUFFIX") {
