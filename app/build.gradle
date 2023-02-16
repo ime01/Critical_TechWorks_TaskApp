@@ -36,10 +36,84 @@ android {
 
 
     buildTypes {
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            ext.config = getProps('../config/release.properties')
+
+            ext.config.each{p->
+
+                if (p.key == "APPNAME"){
+                    resValue "string","app_name",p.value
+                }
+
+                else if(p.key =="APPLICATION_ID_SUFFIX"){
+                    applicationSuffix p.value
+                }
+                else
+                    buildConfigField 'String', p.key, p.value
+
+            }
+
         }
+
+        debug {
+
+            minifyEnabled false
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            ext.config = getProps('../config/staging.properties')
+
+            ext.config.each { p ->
+
+                if (p.key == "APPNAME") {
+
+                    resValue "string", "app_name", p.value.replace('"', '')
+
+                } else if (p.key == "APPLICATION_ID_SUFFIX") {
+
+                    applicationIdSuffix p.value
+
+                } else
+
+                    buildConfigField 'String', p.key, p.value
+            }
+        }
+
+
+
+            dev {
+
+                minifyEnabled false
+
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+
+                ext.config = getProps('../config/development.properties')
+
+                ext.config.each { p ->
+
+                    if (p.key == "APPNAME") {
+
+                        resValue "string", "app_name", p.value
+
+                    } else if (p.key == "APPLICATION_ID_SUFFIX") {
+
+                        applicationIdSuffix p.value
+
+                    } else {
+
+                        buildConfigField 'String', p.key, p.value
+
+                    }
+
+                }
+
+            }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -51,6 +125,7 @@ android {
     viewBinding {
         enabled = true
     }
+
 }
 
 dependencies {
@@ -141,4 +216,13 @@ dependencies {
 
 kapt {
     correctErrorTypes true
+}
+
+def getProps(path){
+
+    Properties props = new Properties()
+
+    props.load(new FileInputStream(file(path)))
+
+    return props
 }
