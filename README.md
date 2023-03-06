@@ -1,6 +1,8 @@
 # Critical_TechWorks_TaskApp
 Android App built for my Role at Critical TechWorks, built in line with the requirement document sent, however i have also gone ahead to add some extra features as you'll find in the app, such as in app NEWS TITLE SEARCH, SETTINGS TO SWITCH TO DAY/NIGHT MODE,(BIOMETRIC NAVIGATION TO FINGERPRINT SETUP IF WISHED)
 
+[![Build Status](https://app.bitrise.io/app/b8dac3a19aa8d17e/status.svg?token=HbnjqNb_IA9w5aMVhBGC-w&branch=master)](https://app.bitrise.io/app/b8dac3a19aa8d17e)
+
 
 
 APP IS BUILT WITH CLEAN ARCHITECHTURE 
